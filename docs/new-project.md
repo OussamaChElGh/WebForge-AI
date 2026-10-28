@@ -1,43 +1,49 @@
-# Adoptar WebForge en un frontend existente
+# Usar V1 sobre una web de Google AI Studio
 
-## 1. Inspección de una sola vez
+## 1. Conservar el proyecto existente
 
-Trabajar en el checkout del cliente y una rama. En la nube no crear worktrees salvo petición expresa. Preservar archivos y cambios existentes. Comprobar versión de Next/React, router, CSS/Tailwind, gestor/lockfile, librerías motion, componentes y scripts disponibles. No ejecutar create-next-app ni regenerar páginas; tampoco instalar el package.json completo del framework en el cliente.
+Abrir el checkout exportado en una rama y conservar su gestor/lockfile, rutas, contenido, estilos e integraciones. No ejecutar create-next-app ni copiar el package.json de WebForge. En la nube trabajar en el checkout existente sin worktree salvo petición expresa. La exportación puede ser Next, React/Vite u otra configuración: verificarla antes de usar componentes.
 
-Persistir [contexto](../templates/client-context.md) con revisión auditada y rutas relevantes. Capturar baseline de diseño/estados y funcionamiento; medir rendimiento con condiciones repetibles. El código exportado de Google AI Studio se trata como código de entrada; no se asume una API ni se requiere credencial de Google.
+Crear contexto con templates/client-context.md: revisión, stack/versiones, comandos reales, rutas objetivo, componentes/tokens/motion existentes, áreas protegidas, baseline y límites. Actualizar solo lo que cambie; no auditar todo el repo en cada turno.
 
-## 2. Incorporación selectiva
+## 2. Roles, skills y especificación
 
-Revisar AGENTS.md/.codex/.agents existentes antes de copiar o fusionar instrucciones. No sobrescribirlas. Incorporar solo los tres roles y skills pertinentes, conservando restricciones del cliente. Con Codex 0.163.0, los roles se registran en .codex/config.toml y las skills viven en .agents/skills/. Revisar y confiar en el proyecto mediante Codex; un TOML válido no demuestra carga de roles. No modificar automáticamente ajustes globales de confianza.
+Fusionar reglas/roles/skills pertinentes con los ya existentes; no sobrescribir AGENTS.md ni .codex/.agents. Revisar confianza y capacidades reales de Codex. Director dirige e investiga, Engineer implementa, Critic revisa evidencia. Elegir skill concreta; UI UX Pro Max permanece externa bajo demanda sin duplicar sus datos. Ver integrations/README.md.
 
-Conservar el sistema de estilos del cliente. styles/tokens.css es referencia y opt-in, no un tema para importar globalmente. Si ya hay tokens, mapear roles existentes. styles/tailwind.css requiere Tailwind 4; no imponerlo a Tailwind 3 u otro sistema.
+La plantilla templates/project/README.md organiza contexto/especificación/evidencia por cliente. Completar una copia de templates/enhancement-spec.json con revisión base, objetivo, archivos permitidos/protegidos, criterios visuales/motion y presupuestos. Conservar draft hasta aprobación humana trazable; cambios de revisión invalidan la aprobación anterior.
 
-## 3. Especificación antes de diseño
-
-Director propone un piloto de una sección/interacción con intención artística, composición/tipografía y función de motion. Copiar templates/enhancement-spec.json y completar baseRevision, archivos concretos permitidos/protegidos, baselineEvidence, acceptance, motion y presupuestos numéricos. Si no hay motion, documentar explícitamente no aplica y cleanup sin efectos.
-
-Mantener status draft hasta obtener aprobación humana explícita y trazable de esa revisión. Registrar approvedBy, approvedRevision y approvalEvidence. Cada cambio de especificación aumenta revision y requiere nueva aprobación. No inventar el aprobador ni usar la aprobación del framework para un rediseño de cliente.
-
-Desde el checkout WebForge:
+Desde el framework:
 
 ```sh
-npm run spec:check -- /ruta/cliente/enhancement-spec.json
+npm run spec:check -- /ruta/cliente/docs/webforge/enhancement-spec.json
 ```
 
-Es una validación estructural: no verifica identidad, integridad criptográfica, autenticidad ni que baseRevision coincida con el checkout. El Director contrasta aprobación y revisión real antes de delegar. El gate no edita la web. La plantilla draft se rechaza intencionadamente.
+El validador comprueba estructura y estado declarado, no autentica al aprobador ni compara por sí mismo el SHA real. Director contrasta esa evidencia. La autorización para construir V1 no autoriza rediseñar clientes.
 
-## 4. Implementación incremental
+## 3. Incorporar solo el componente necesario
 
-Director asigna archivos y aceptación; Engineer conserva contenido, navegación, SEO, datos e integraciones. Reutilizar CSS y componentes actuales. Seleccionar dependencias por efecto, no instalar todas las referencias. Si se usan [presets GSAP](../motion/README.md), copiar solo el módulo necesario, revisar la versión GSAP y llamar desde un efecto cliente con cleanup. No trasladar toda la página de servidor a cliente. Cambios en wrappers/tokens requieren estar en la especificación aprobada.
+En WebForge, npm ci y npm run build generan JS y tipos. Se puede usar el paquete como dependencia local/workspace, crear un tarball interno con npm pack, o copiar componentes seleccionados con sus helpers e imports relativos. package.json sigue private/UNLICENSED: no se ha publicado un paquete ni decidido licencia pública propia.
 
-Probar montaje, desmontaje, cambios de ruta/Strict Mode, breakpoints y reduced motion en carga y cambio. No añadir 3D sin función, presupuesto, fallback y liberación de recursos. No cambiar el diseño original a partir de una recomendación externa sin aprobación.
+Revisar React instalado: V1 se prueba con React/ReactDOM 19. No forzar actualización de React/Tailwind; si el cliente es distinto, comprobar/adaptar una copia o continuar con patrones existentes. Incorporar con su gestor solo GSAP para TextReveal/ParallaxHero o Motion para MagneticButton; no instalar ambos para un efecto simple. Ver components/README.md y docs/dependencies.md.
 
-## 5. Evidencia y aceptación
+Ejemplo de import por subpath en Next:
 
-Ejecutar scripts reales del cliente de build/tipos/lint/tests; registrar si faltan o fallan. Capturar rutas/estados/viewports idénticos antes/después y grabación para motion. Medir presupuestos en el mismo entorno; usar [plantilla](../templates/visual-evidence.md) y [protocolo QA](../qa/README.md). Critic revisa sin editar; Director acepta o asigna corrección acotada. No crear nuevos baselines automáticamente para ocultar fallos.
+```tsx
+import { TextReveal } from 'webforge-ai/components/TextReveal';
 
-No hay comandos dev/build en este framework; son del cliente. Vercel o cualquier despliegue quedan fuera salvo tarea explícitamente autorizada.
+export default function ExistingSection() {
+  return <TextReveal as="h2" text="El título aprobado del cliente" />;
+}
+```
 
-## Controles del framework
+El componente de biblioteca ya declara use client; no convertir la página entera en cliente. Callbacks de MagneticButton deben pasar desde una isla cliente. ParallaxHero admite media decorativa, incluso Next Image si se configura según su versión; el contenido esencial va en children. Estos son ejemplos de uso, no una app Next probada aquí.
 
-Node 24, npm ci y npm run check. Navegador: npx playwright install --with-deps chromium; luego npm run test:browser. Si la red bloquea la descarga y hay Chromium local, usar explícitamente PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium y registrar versión. Las fixtures no validan una app Next.js real.
+Conservar tokens actuales; styles/ solo se importa si se aprueba. El adaptador de WebForge es Tailwind 4 y no debe imponerse a otra versión. No crear nuevo backend, página, checkout o proveedor para una mejora visual.
+
+## 4. Validar y revisar
+
+Ejecutar scripts reales del cliente de tipos/lint/build/pruebas; no sustituirlos por el check del framework. Verificar navegación, cleanup y StrictMode, contenido SSR, interacción, reduced motion y anchos críticos. Mantener baseline antes/después de los mismos estados/datos/viewports.
+
+La fixture de WebForge demuestra funcionamiento de componentes, no el diseño de un cliente. Para comparar imágenes aportar referencias aprobadas a test:visual; no crear baselines silenciosamente. Critic debe poder VER las capturas antes de declarar auditoría visual por IA; para animación se necesitan clips/trazas y para performance mediciones del cliente.
+
+Director acepta con evidencia según qa/README.md. No realizar despliegues ni fusionar cambios sin autorización expresa.

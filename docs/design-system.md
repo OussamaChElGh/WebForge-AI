@@ -14,8 +14,12 @@ styles/tailwind.css es adaptador opcional para Tailwind 4 con source(none) y @th
 
 Documentar para el piloto: orden de lectura, escala y medida tipográfica, composición de imágenes, densidad, contraste, punto focal y referencias con derechos. Motion debe reforzar jerarquía o narrativa, no esconder contenido ni competir con el CTA. Definir disparador, duración/ease, capas afectadas y alternativa estática/reduced motion.
 
-Biblioteca motion/ separada de identidad: presets opt-in con motor GSAP aportado por consumidor y wrappers dedicados. El valor --wf-motion-duration de CSS no controla automáticamente un tween GSAP; estos presets usan matchMedia para preferencias. Evitar animar la misma propiedad desde CSS y varios motores.
+Biblioteca components/ y presets motion/ separados de identidad: presets opt-in con motor GSAP aportado por consumidor y wrappers dedicados. El valor --wf-motion-duration de CSS no controla automáticamente un tween GSAP; estos presets usan matchMedia para preferencias. Evitar animar la misma propiedad desde CSS y varios motores.
 
 ## Aceptación
 
 Verificar legibilidad, teclado/foco, contraste AA pertinente, objetivos de controles, zoom y responsive de la interfaz real. Verificar contenido sin JS, reduced motion y cleanup en navegación. Las pruebas de tokens no prueban accesibilidad completa ni calidad artística de un cliente. Visual Critic necesita capturas y clips comparables; el Director decide con intención y evidencias, no con la cantidad de efectos.
+
+## Componentes V1
+
+TextReveal conserva texto completo accesible y palabras visibles SSR. ParallaxHero mantiene primer plano estable y media decorativa aria-hidden/inert. MagneticButton conserva botón nativo y no desplaza controles con teclado/touch/reduced motion. className/style reutilizan el sistema del cliente; no se importan tokens globales por defecto. Los ejemplos están en components/README.md.

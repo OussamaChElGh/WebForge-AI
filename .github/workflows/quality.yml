@@ -1,4 +1,4 @@
-name: Creative infrastructure quality
+name: Creative framework V1 quality
 on:
   pull_request:
   push:
@@ -21,7 +21,7 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: npm run test:browser
       - uses: actions/upload-artifact@v4
-        if: failure()
+        if: always()
         with:
           name: playwright-evidence
           path: |

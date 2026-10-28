@@ -1,43 +1,39 @@
-# Arquitectura creativa v0.2
+# Arquitectura V1
 
-## Responsabilidad
+WebForge es el framework maestro; el cliente conserva su propia app. Complementa Google AI Studio mediante dirección, componentes y revisión, sin asumir una API de generación ni recrear rutas/backend/deployment.
 
-WebForge mejora la capa visual/interactiva de un frontend ya funcional. Google AI Studio u otra herramienta entrega código; se recibe un checkout, no se asume una API de generación ni un MCP. No hay backend, producto, deployment ni motor de agentes propios. El framework no construye otra aplicación Next.js para sustituir la existente.
+| Capa               | Responsabilidad                                            | Consumo                                                                 |
+| ------------------ | ---------------------------------------------------------- | ----------------------------------------------------------------------- |
+| .codex/            | Tres agentes nativos y contratos                           | Hilo principal Director; Engineer/Critic solo cuando aportan valor      |
+| .agents/skills/    | Siete skills solicitadas más auditoría inicial conservada  | Carga por tarea; sin datos duplicados de UI UX Pro Max                  |
+| components/        | Biblioteca React TS estricta, tres componentes propios     | Subpaths para seleccionar el motor; cada componente es frontera cliente |
+| motion/            | Presets GSAP con scope/matchMedia/reversión                | Reutilizados por TextReveal y ParallaxHero                              |
+| styles/            | Tokens semánticos/adaptador Tailwind                       | Opt-in; mantener estilos/versiones del cliente                          |
+| qa/                | Fixture React SSR, servidor local y protocolo de evidencia | Solo laboratorio, no app de cliente ni producción                       |
+| templates/project/ | Inicio documental sobre una app existente                  | Sin scaffolding Next; contexto, especificación, decisiones y evidencia  |
+| integrations/      | Procedimientos de referencias externas                     | No CLI ejecutado, servicios/MCP configurados ni catálogos copiados      |
+| docs/              | Decisiones, fuentes a commit, licencias y progreso         | Memoria compacta; evitar repetir análisis                               |
 
-## Módulos
+## Agentes y compatibilidad
 
-| Módulo          | Función                                                                 | Carga                                                    |
-| --------------- | ----------------------------------------------------------------------- | -------------------------------------------------------- |
-| .codex/         | Tres roles nativos: creative_director, creative_engineer, visual_critic | Director principal; especialistas solo por tarea         |
-| .agents/skills/ | Auditoría, dirección, motion y crítica                                  | Solo skill pertinente; instrucciones, no agentes nuevos  |
-| motion/         | Reveal/parallax GSAP, inyección de motor, scope y reversión             | Opt-in y frontera cliente; sin acceso DOM al importar    |
-| styles/         | Tokens semánticos y adaptador Tailwind 4                                | Opcional; preservar estilos/versión Tailwind del cliente |
-| qa/             | Evidencia visual, responsive, accesibilidad y presupuesto               | Comandos deterministas antes de crítica humana           |
-| integrations/   | Guía de adopción de referencias y límites externos                      | Sin SDKs/MCPs automáticos                                |
-| templates/      | Contexto persistido, especificación aprobable y comparación             | Archivos de proyecto concretos, sin repetir análisis     |
-| docs/           | Decisiones, referencias, estado y migración                             | Resumen primero; detalles solo cuando se necesitan       |
-| archive/        | Documentación y roles generalistas anteriores                           | No cargar en contexto habitual ni registrar como agentes |
+Creative Director coordina, investiga y especifica arte/diseño. Creative Engineer implementa frontend/GSAP/Motion y controles. Visual Critic revisa evidencia sin editar. Registro [agents.<role>] y config_file, sandbox read-only para Critic, máximo de dos subagentes y profundidad uno. No se fija modelo ni se modifica trust global. Configuración preparada para Codex 0.163.0; el esquema válido no demuestra que una instalación sin confianza cargue esos roles. Las skills requieren descubrimiento por esa instalación.
 
-## Roles y fronteras
+## Biblioteca y build
 
-Creative Director absorbe coordinación y dirección de arte; identifica intención, alcance y aceptación. Creative Engineer implementa frontend/motion y ejecuta calidad técnica. Visual Critic revisa sin editar y declara lo no evaluable sin capturas reales. No se crea un cuarto agente para un comando de test. Máximo dos subagentes concurrentes, profundidad V1 uno y un escritor por archivo. El contrato es organizativo, no un lock del filesystem.
+npm run build usa tsc para generar dist/components y dist/motion con ESM/declaraciones; preserva use client. El paquete privado declara exports por componente y peers. GSAP/Motion son opcionales por subpath; el barrel importa los tres y requiere ambos motores. React 19 es la versión probada; no se obliga a migrar otro cliente.
 
-Registro [agents.<role>] con description/config_file y capas de sandbox, sin modelo impuesto. Codex instalado 0.163.0; la validación de esquema y la carga nativa son comprobaciones diferentes. Codex puede ignorar el registro hasta confiar en el checkout; no se cambia trust global desde el repo. Las skills usan el formato local .agents/skills/<name>/SKILL.md; su disponibilidad en otro cliente requiere descubrimiento nativo de esa instalación.
+TextReveal compone palabras visibles SSR y texto completo accesible, con GSAP reutilizado del preset. ParallaxHero separa primer plano del slot decorativo aria-hidden/inert y solo activa ScrollTrigger cuando permiten breakpoint y movimiento. MagneticButton mantiene botón nativo, valores/springs Motion fuera del estado React de cada puntero y un wrapper estable. Limpia listener/springs; teclado, touch, disabled y reduced motion conservan posición estática.
 
-## Flujo incremental
+No hay estilos globales del framework importados por componentes. className/style permiten el sistema existente, incluido Tailwind. No combinar dos motores sobre la misma propiedad. UI UX Pro Max, React Bits, Motion Primitives y TweenLabs son referencias/guías, no dependencias del runtime. [Versiones y licencias](dependencies.md).
 
-Contexto y baseline → especificación draft → aprobación de revisión → gate estructural → piloto delimitado → controles/evidencia → crítica → aceptación o corrección del mismo propietario. Cambios de revisión invalidan aprobación anterior. Nunca se infiere consentimiento del silencio ni de que un JSON tenga status approved; hay que contrastar approvalEvidence.
+## QA y límites
 
-En Next.js, incorporar solo una isla cliente para efectos; no convertir toda una ruta a use client, cambiar router o reemplazar global.css. Mantener el resto del stack, contenido, SEO, datos e integraciones intactos salvo alcance explícito. El ejemplo de motion es orientación para un efecto, no una integración Next.js ejecutada.
+El servidor de qa/ compila la fixture local con esbuild y produce HTML SSR + hidratación React. Playwright lo inicia/cierra, comprueba errores, overflow, keyboard/touch, preferencias y ciclos StrictMode. Los assets son SVG propios; no hay servicios externos ni datos cliente. CI guarda capturas/informes como artefactos incluso en éxito.
 
-## Dependencias y tecnologías
+La comparación visual usa configuración separada y referencias aprobadas externas; no crea ni actualiza baselines. Capturas no equivalen a capturas vistas: la revisión por IA exige acceso efectivo del modelo a ellas. Clips/trazas y mediciones del dispositivo cliente son necesarios para juzgar fluidez/presupuesto.
 
-Se conservan TypeScript 6, ESLint, Prettier, Playwright, smol-toml y Tailwind CLI porque se usan en controles. GSAP 3.15.0 se añade como devDependency para probar presets reales; motion/ no importa el motor en runtime y el proyecto cliente decide su instalación. No se instala React, Next, Motion, Three/Fiber ni catálogos. Consultar [evaluación](references.md) antes de ampliar.
+No se ejecutó una app Next.js, benchmark de Core Web Vitals ni un despliegue. El límite cliente y SSR React están comprobados; la integración específica de Next/router/versión se prueba al adoptar el componente en el cliente.
 
-Reutilizar CSS/motion existentes primero. GSAP para secuencias/scroll; 3D solo con función artística clara, fallback, carga diferida, lifecycle y presupuesto. No añadir scroll smoothing global por defecto.
+## Eficiencia y alcance
 
-## Eficiencia y límites
-
-Guardar revisión auditada, rutas, decisiones y resultados. Cada asignación transmite objetivo, archivos/diff, skill y aceptación, no todo el repo. El crítico recibe evidencias reales, no otra auditoría de arquitectura. Actualizar referencias solo al cambiar versión/necesidad. Medir rondas, reutilización y tiempo; tokens solo si hay medición disponible.
-
-No hay app cliente ni benchmark de calidad artística. Las fixtures verifican scope, cleanup, CSS y responsive técnico del laboratorio; no prueban Core Web Vitals ni conformidad WCAG del cliente. No se añaden servicios para métricas: usar herramientas existentes y registrar sus condiciones.
+Auditar una vez por revisión, persistir contexto y delegar objetivo/diff/rutas concretas; un único escritor por archivo. No crear roles ni activar ocho skills por defecto. Reutilizar componentes y herramientas deterministas antes de pedir crítica. No atribuir ahorro de tokens o mejora visual del cliente sin baseline medido.

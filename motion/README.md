@@ -31,3 +31,7 @@ useEffect(() => mountReveal(gsap, root.current), []);
 El fragmento muestra líneas dentro del componente: no es una aplicación completa. Verificar imports y versiones del cliente, contenido SSR y ciclo setup/cleanup/setup de React Strict Mode. Para parallax importar ScrollTrigger en la frontera cliente y pasar mountParallax(gsap, ScrollTrigger, root.current). Si se cargan módulos asíncronamente, gestionar la cancelación del efecto; el preset no gestiona esa carga por ti.
 
 El código y tests de este repositorio prueban GSAP real en navegador, no un mock. Validan aislamiento, cleanup repetible, media queries y conservación de triggers ajenos. No acreditan fluidez, coste gzip final o Core Web Vitals del cliente; medirlos en su build/dispositivo antes y después. Consultar qa/README.md.
+
+## V1 React
+
+TextReveal y ParallaxHero de components/ reutilizan estos presets con efectos cliente y cleanup automático. MagneticButton usa Motion en un nodo separado. La biblioteca compilada y sus ejemplos están en components/README.md; no importar todos los motores por defecto.

@@ -1,32 +1,30 @@
-# Pull request preparada — migración creativa
+# Pull request preparada — Creative Frontend Framework V1
 
-Título: refactor: specialize WebForge as a creative frontend enhancement framework
+Título: feat: add creative React components, skills and visual QA
+Base: feat/creative-enhancement-migration (275e77a al iniciar).
+Rama: feat/creative-framework-v1.
+Estado: implementación validada; publicación y creación de PR por comprobar al cerrar.
 
-Base: feat/multiagent-infrastructure (e30fc12 al iniciar).
-Rama: feat/creative-enhancement-migration.
-Estado: rama publicada correctamente; implementación en 091fff1. gh pr create --draft falló con Forbidden en https://api.github.com/graphql; no se creó PR. La base existente sí está disponible.
+## Problema y resultado
 
-## Problema y comportamiento resultante
-
-WebForge estaba orientado a construir webs completas con seis roles. Ahora mejora frontends existentes generados por Google AI Studio u otras herramientas mediante tres roles: Creative Director coordina y define, Creative Engineer implementa, Visual Critic revisa. No reconstruye aplicaciones ni altera diseño sin especificación aprobada.
+La base creativa tenía presets DOM, sin componentes React ni capturas de una interfaz real. V1 añade tres componentes propios reutilizables y un laboratorio SSR/cliente para verificar su funcionamiento, sin construir una web completa ni sustituir Google AI Studio.
 
 ## Cambios
 
-- Auditoría y clasificación conservar/adaptar/archivar/eliminar; 21 archivos históricos preservados byte a byte y seis roles retirados del registro activo.
-- Tres roles, cuatro skills bajo demanda y contratos/contexto persistentes para evitar auditorías repetidas y escritores simultáneos.
-- Tokens opt-in y plantillas de contexto, especificación aprobable y evidencia antes/después. Gate estructural con pruebas de aprobación/revisión/scope y presupuestos; no autentica aprobación humana.
-- Presets GSAP propios de reveal/parallax con SSR, scope, cleanup, reduced motion y breakpoints. GSAP es la única dependencia nueva y se usa en pruebas reales.
-- Evaluación de UI UX Pro Max, React Bits, Motion Primitives, GSAP, Three.js y React Three Fiber; sin instalación masiva ni redistribución de catálogos.
-- Calidad determinista y workflow adaptado, sin despliegues ni app de demostración.
+- TextReveal/ParallaxHero con GSAP; MagneticButton con Motion; parámetros, tipos, ejemplos, cleanup, SSR y reduced motion.
+- Tres agentes y siete skills creativas más auditoría inicial conservada. Plantilla documental y consumo incremental sobre apps existentes.
+- Build ESM con declaraciones y subpaths; motores opcionales por componente, sin imponer todos al cliente.
+- Playwright con capturas desktop/mobile/tablet, overflow, teclado/touch, montaje/desmontaje y comparación opcional que exige referencias aprobadas.
+- Investigación a commits fijos de UI UX Pro Max, React Bits, Motion Primitives y TweenLabs; scripts inspeccionados, no ejecutados. Sin catálogos copiados.
 
 ## Validación
 
-npm ci; npm run check; 9 pruebas Node y 15 casos Playwright con Chromium 154 local. Esquema oficial Codex válido; archivo histórico verificado contra e30fc12. Draft spec rechazada como corresponde. Auditoría npm sin vulnerabilidades. Revisión independiente detectó aceptación de rutas Windows absolutas; corregida con regresión.
+npm ci y npm run check correctos. Once tests Node y treinta casos Playwright con Chromium154 local pasan. Capturas reales generadas y desktop/mobile vistas por Visual Critic. Un P2 del slot decorativo se corrigió con inert y regresión de Tab/SSR. Esquema Codex válido, npm pack dry-run comprueba exports/tipos/use client, auditoría npm sin vulnerabilidades.
 
-## Riesgos y límites
+La comparación visual no se ejecutó por falta de referencias aprobadas; la configuración rechaza su ausencia. No se generaron baselines para simular validación.
 
-La carga nativa de agentes/skills depende de trust y de la instalación; no se cambia confianza global. CI remoto y el navegador fijado de Playwright no se han validado aquí. No hay aplicación cliente ni prueba de Next.js, mejora artística, rendimiento o ahorro de tokens. Esas métricas requieren piloto aprobado y evidencia real. 3D e integraciones externas permanecen opcionales.
+## Límites
 
-API GitHub devuelve Forbidden. La descripción preparada no implica que exista PR; no fusionar ni desplegar automáticamente.
+Sin build Next.js real, despliegue, benchmark de performance ni auditoría artística de cliente. React19 es la versión probada; conservar versiones del cliente y verificar compatibilidad antes de instalar. Roles/skills dependen de trust/descubrimiento de Codex. Motion Primitives pendiente de texto de licencia verificable. Paquete privado, sin licencia pública propia ni publicación npm.
 
-Revisión manual con la descripción de este archivo: https://github.com/OussamaChElGh/WebForge-AI/compare/feat%2Fmultiagent-infrastructure...feat%2Fcreative-enhancement-migration?expand=1
+No fusionar ni desplegar automáticamente. Una descripción preparada o rama publicada no implica que exista PR remota.

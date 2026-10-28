@@ -1,4 +1,4 @@
-# Migración a Creative Frontend Enhancement Framework
+# Migración a Creative Frontend Enhancement Framework — histórico v0.2
 
 Fecha: 2026-10-28. Base auditada: e30fc12. Rama: feat/creative-enhancement-migration.
 

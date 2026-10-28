@@ -8,7 +8,16 @@
     "skipLibCheck": true,
     "types": ["node"],
     "allowJs": true,
-    "checkJs": true
+    "checkJs": true,
+    "jsx": "react-jsx"
   },
-  "include": ["playwright.config.ts", "tests/**/*.ts", "motion/**/*.mjs"]
+  "include": [
+    "playwright.config.ts",
+    "tests/**/*.ts",
+    "motion/**/*.mjs",
+    "components/**/*.tsx",
+    "components/**/*.ts",
+    "qa/fixture/**/*.tsx",
+    "playwright.visual.config.ts"
+  ]
 }

@@ -1,45 +1,50 @@
-# Estado — migración creativa v0.2
+# Estado — Creative Frontend Framework V1
 
-Fecha: 2026-10-28. Base auditada: e30fc12. Rama: feat/creative-enhancement-migration. No hay aplicación de cliente ni rediseño aprobado.
+Fecha: 2026-10-28. Base: 275e77a, feat/creative-enhancement-migration. Rama: feat/creative-framework-v1. No se ha construido una web de cliente ni realizado despliegues.
 
-## Entregado por etapas
+## Implementado
 
-- Auditoría y clasificación antes de modificar roles: docs/migration.md. Se preservaron 21 archivos históricos byte a byte desde e30fc12.
-- Tres roles activos, cuatro skills bajo demanda, contratos creativos y contexto persistente. Roles antiguos fuera de registro y descubrimiento.
-- Tokens/CI conservados y adaptados; gate de especificación aprobable; plantillas transversales en lugar de planes de webs completas.
-- Biblioteca propia reveal/parallax con GSAP 3.15.0 inyectado, SSR sin efectos, scope, cleanup y reduced motion. GSAP es la única dependencia nueva.
-- Evaluación de seis referencias en docs/references.md y guía de adopción en repos existentes. Ningún catálogo externo, 3D, MCP o API de generación instalado.
+- Tres roles Codex y contratos conservados/adaptados. Siete skills solicitadas y creative-audit conservada; carga selectiva.
+- TextReveal, ParallaxHero y MagneticButton propios en React/TypeScript, ejemplos y parámetros documentados. GSAP y Motion se aplican a nodos distintos; sin catálogo copiado.
+- Build ESM con tipos y exports por componente. SSR visible, cleanup, StrictMode y reduced motion probados. ParallaxHero usa media decorativa aria-hidden/inert.
+- Fixture técnica local React SSR/hidratada; Playwright con desktop/mobile touch/tablet, capturas, overflow, interacción y pruebas sin JS. CI conserva artefactos también en éxito.
+- Comparación visual separada que exige referencias aprobadas y no genera/actualiza baselines.
+- Fuentes oficiales a commits fijados para UI UX Pro Max, React Bits, Motion Primitives y TweenLabs. CLI de TweenLabs inspeccionado sin ejecutar. Skill externa UI UX Pro Max preparada documentalmente, sin duplicar datos ni instalarla.
+- Plantilla documental de proyecto y guía de adopción incremental sobre el checkout generado por Google AI Studio.
 
-## Propiedad y revisión
+## Evidencia de esta iteración
 
-| Tarea                                 | Propietario                                   | Archivos                                                  | Estado                                               |
-| ------------------------------------- | --------------------------------------------- | --------------------------------------------------------- | ---------------------------------------------------- |
-| Auditoría, migración e implementación | Creative Director / hilo principal            | Configuración, biblioteca, tests y resto de documentación | Integrado                                            |
-| Referencias externas                  | creative_references, tarea documental acotada | docs/references.md e integrations/README.md               | Cerrado; propiedad liberada antes de integrar        |
-| Revisión de ingeniería creativa       | creative_review, solo lectura                 | motion, gate, tests y configuración                       | Cerrado; P2 de rutas Windows corregido con regresión |
+| Comprobación                                 | Resultado                      | Alcance                                                                                                                                         |
+| -------------------------------------------- | ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| npm ci                                       | passed                         | 151 dependencias desde lockfile; paquetes nuevos con uso real documentado                                                                       |
+| npm run check                                | passed                         | ESLint, TypeScript estricto, Prettier, build de biblioteca y tests Node                                                                         |
+| Tests Node                                   | 11 passed, 0 failed, 0 skipped | Exports públicos/SSR real, parámetros, roles/skills, tokens/Tailwind, presets y gate                                                            |
+| Playwright con Chromium local                | 30 passed, 0 failed, 0 skipped | Chromium 154.0.8037.57; desktop1280/mobile touch320/tablet768, además de resize                                                                 |
+| Capturas PNG reales                          | Generadas                      | test-results/**/components.png, una por proyecto; estado inicial/reduced motion                                                                 |
+| Revisión Visual Critic con acceso a imágenes | Realizada, limitada a fixture  | Capturas desktop/mobile vistas; no cortes/overflow observados. P2 decorativo accesible corregido con inert, Tab y SSR; no aprobación de cliente |
+| Configuraciones Codex                        | passed                         | Registro y tres capas pasan esquema oficial 0.163.0                                                                                             |
+| npm pack --dry-run                           | passed                         | Exports/types y directivas use client incluidos; 16 archivos. No publicado                                                                      |
+| npm audit --omit=optional --audit-level=high | passed                         | 0 vulnerabilidades comunicadas                                                                                                                  |
+| npm run test:visual sin referencias          | Rechazo esperado, exit1        | Falta ruta absoluta de referencias; comparación de imágenes no ejecutada                                                                        |
 
-Estas son tareas de esta sesión, no nuevos roles persistentes. Visual Critic no emite aprobación artística de un cliente inexistente.
+Primeros fallos de fixture: favicon404 y ausencia de meta viewport en casos móviles antiguos, corregidos. Se mantuvo la aserción de consola limpia y se corrigió la emulación. No hay esos fallos abiertos. La revisión detectó descendientes interactivos potenciales dentro de media aria-hidden: corregidos con inert y una regresión de Tab contra un enlace de laboratorio.
 
-## Evidencia ejecutada
+## Delegación y propiedad
 
-| Comprobación                                           | Resultado                      | Alcance                                                                                                                               |
-| ------------------------------------------------------ | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------- |
-| npm ci                                                 | passed                         | 138 dependencias instaladas desde lockfile; una nueva dependencia directa GSAP                                                        |
-| Esquema oficial Codex rust-v0.163.0                    | passed                         | Registro y tres capas TOML; no prueba invocación nativa                                                                               |
-| Comparación del archivo histórico con git show e30fc12 | passed                         | 21 archivos, contenido idéntico                                                                                                       |
-| npm run check                                          | passed                         | Lint, TypeScript (incluye biblioteca JS), Prettier y 9 tests Node                                                                     |
-| npm test                                               | 9 passed, 0 failed, 0 skipped  | Tres roles, skills, contraste/compilación Tailwind, SSR, opciones motion y gate positivo/negativo                                     |
-| Playwright con /usr/bin/chromium                       | 15 passed, 0 failed, 0 skipped | Chromium 154.0.8037.57; 320/768/1280 px, tokens/foco y lifecycle GSAP; cambios de preferencia y viewport; triggers ajenos conservados |
-| npm run spec:check -- templates/enhancement-spec.json  | Rechazo esperado, exit 1       | Plantilla draft sin aprobación/baseline no habilita implementación                                                                    |
-| npm audit --omit=optional --audit-level=high           | passed                         | 0 vulnerabilidades comunicadas por el registro                                                                                        |
-| Revisión independiente acotada                         | Completada                     | Sin defectos críticos; rechazo de C:/ y C:relative añadido al gate y regresiones                                                      |
+| Tarea                                    | Archivos                                                    | Estado                                                                                      |
+| ---------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| reference_v1, investigación del Director | docs/references.md, integrations/README.md                  | Cerrada; propiedad liberada antes de integración                                            |
+| Hilo principal / ingeniería creativa     | Biblioteca, skills, fixture, tests y documentación restante | Integrado                                                                                   |
+| visual_critic_v1, solo lectura           | Componentes y capturas concretas de fixture                 | Revisado con herramientas de imagen; corrección textual verificada, sin cambios del crítico |
 
-Un fallo inicial de la prueba de cleanup comparaba la serialización literal del atributo style (punto y coma); se corrigió para comparar CSS normalizado sin debilitar la comprobación de restauración. El primer lint detectó un escape innecesario, corregido. No quedan esos fallos abiertos.
+No hay escritores simultáneos en los mismos archivos ni nuevos roles persistentes.
 
-## Límites y siguiente acción
+## Pendientes y límites
 
-- El app-server ya confirmó en la etapa anterior que Codex omite la configuración local por falta de confianza. No se modificó trust global; las cuatro configuraciones nuevas pasan esquema, pero falta probar invocación nativa en una sesión que confíe en el checkout. Igual para descubrimiento de skills en otro cliente.
-- Se usa explícitamente Chromium local. La descarga del navegador fijado por Playwright está bloqueada en cdn.playwright.dev según el diagnóstico previo. No se equiparan ambas versiones; CI instalará su propia versión y su ejecución remota sigue sin verificarse.
-- API GitHub REST sigue devolviendo Forbidden. La base real de la PR es feat/multiagent-infrastructure, que sí existe; no es main. La rama de migración se publicó correctamente (implementación 091fff1). gh pr create --draft contra esa base falló con Forbidden; no existe PR creada por esta sesión. Descripción y enlace de comparación en docs/pull-request.md.
-- No se ejecutó una integración Next.js ni build de aplicación, QA visual de cliente, benchmark de fluidez/Core Web Vitals, 3D ni despliegue. No se declara mejora visual, ahorro de tokens o reducción de iteraciones todavía.
-- Siguiente validación de producto: un piloto aprobado sobre una sección de un frontend existente, con baseline y evidencia comparable según templates/ y qa/README.md.
+- La comparación visual espera referencias aprobadas reales; no se incluyeron baselines generados a posteriori. Las capturas estáticas no validan fluidez ni presupuestos de rendimiento del cliente.
+- React19 SSR/hidratación están probados. No se ejecutó un build de Next.js ni una app real de cliente; tampoco React18, auditoría WCAG completa, Core Web Vitals o despliegue.
+- Skills/roles requieren confianza y descubrimiento en cada instalación Codex. Se conserva el diagnóstico previo de capa local omitida por trust; no se cambió confianza global ni se afirma ejecución nativa de esos roles a partir del registro.
+- Chromium local difiere del navegador fijado de Playwright. La descarga estaba bloqueada por la política de red en cdn.playwright.dev. CI remoto no se declara ejecutado.
+- Motion Primitives: texto de licencia aún no verificable (404); no se copia código. React Bits se trata según sus restricciones Commons Clause. UI UX Pro Max y CLI externos no se instalaron.
+- El paquete maestro sigue private/UNLICENSED; no se inventó licencia pública propia ni se publicó npm. Las dependencias/licencias están en dependencies.md.
+- Publicación de rama y creación de PR se registran en pull-request.md. La base real es feat/creative-enhancement-migration, no main.

@@ -1,14 +1,14 @@
 ---
 name: art-direction
-description: Definir una especificación visual aprobable, diferenciada y compatible con la identidad existente.
+description: Especificar una dirección artística y sistema de diseño con referencias y aprobación trazables.
 ---
 
 # art-direction
 
-Cargar únicamente cuando la tarea lo requiera; estas instrucciones no crean agentes adicionales.
+Cargar únicamente cuando la tarea lo requiera; no activa un agente adicional.
 
-1. Usar brief/contexto y evidencias de las rutas objetivo, no inventar marca ni referencias con derechos.
-2. Proponer una dirección concreta: composición, ritmo, contraste editorial, tipografía y función del movimiento. Evitar un catálogo de efectos.
-3. Delimitar archivos permitidos/protegidos, aceptación visual y presupuestos medibles con templates/enhancement-spec.json.
-4. Marcar draft; solicitar aprobación humana trazable de la revisión antes de implementar. Cambiar revisión invalida aprobación anterior.
-5. Validar estructura con npm run spec:check -- archivo cuando esté aprobada. El comando no autentica aprobación ni autoriza otro alcance.
+1. Leer contexto persistido y referencias de la ruta; no repetir auditoría completa.
+2. Definir intención, composición, ritmo, tipografía y color diferenciados a partir de marca/contenido reales; justificar decisiones y derechos de referencias.
+3. UI UX Pro Max puede aportar una consulta externa selectiva: seguir integrations/README.md, no duplicar su base ni instalar globalmente por defecto.
+4. Delimitar piloto, archivos protegidos, criterios y presupuestos en templates/enhancement-spec.json. Mantener draft hasta aprobación humana de esa revisión.
+5. Entregar especificación, estados del design system y siguiente decisión. No modificar diseño del cliente sin aprobación ni confundir una recomendación con validación.

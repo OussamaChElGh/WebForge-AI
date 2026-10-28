@@ -19,7 +19,7 @@ const moduleUrl = `data:text/javascript;base64,${Buffer.from(source).toString('b
 async function load(page: Page) {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   // Todo local: fixture en memoria, sin aplicación ni peticiones a terceros.
-  await page.setContent(`<style>body { margin: 0; } #scope { padding-top: 80vh; min-height: 200vh; } .layer { height: 120px; width: 80px; }</style>
+  await page.setContent(`<meta name="viewport" content="width=device-width, initial-scale=1"><style>body { margin: 0; } #scope { padding-top: 80vh; min-height: 200vh; } .layer { height: 120px; width: 80px; }</style>
     <div id="outside" data-wf-reveal>Fuera del scope</div>
     <section id="scope"><p data-wf-reveal style="color: red">Texto de laboratorio</p><div class="layer" data-wf-parallax></div></section>`);
   await page.addScriptTag({

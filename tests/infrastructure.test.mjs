@@ -43,8 +43,12 @@ test('skills locales bajo demanda con metadata y sin roles históricos activos',
   const expected = [
     'creative-audit',
     'art-direction',
-    'motion-enhancement',
-    'visual-review',
+    'motion-design',
+    'gsap-scroll-storytelling',
+    'react-bits-integration',
+    'typography-and-layout',
+    'visual-audit',
+    'responsive-refinement',
   ];
   const folders = await readdir(new URL('.agents/skills/', root));
   assert.deepEqual(folders.sort(), expected.toSorted());

@@ -1,6 +1,15 @@
 # Registro de decisiones vigente
 
-## Migración creativa — 2026-10-28
+## V1 — 2026-10-28
+
+- Se añaden tres componentes React propios y build de biblioteca con tipos; se conservan los presets GSAP sin reconstruir una app.
+- GSAP controla TextReveal/ParallaxHero; Motion se incorpora para MagneticButton. React/ReactDOM y esbuild tienen uso real en SSR/fixture. El cliente instala solo el motor necesario.
+- Siete skills creativas solicitadas más creative-audit conservada; motion-enhancement/visual-review se sustituyen por motion-design/visual-audit.
+- UI UX Pro Max, React Bits, Motion Primitives y TweenLabs se investigan a commits fijos, sin instalar sus CLI ni copiar catálogos. Motion Primitives espera licencia verificable.
+- QA genera capturas reales y compara solo si se aportan referencias aprobadas. La revisión de fixture no acredita diseño o rendimiento de cliente.
+- El paquete maestro sigue privado; UNLICENSED explicita que el propietario no ha fijado una licencia pública propia. No se publican paquetes ni se despliega producción.
+
+## Migración creativa v0.2 — 2026-10-28
 
 | Decisión                                                  | Motivo y consecuencias                                                                                                      | Estado                                     |
 | --------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------ |
