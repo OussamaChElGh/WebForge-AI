@@ -3,7 +3,7 @@
 Título: feat: add creative React components, skills and visual QA
 Base: feat/creative-enhancement-migration (275e77a al iniciar).
 Rama: feat/creative-framework-v1.
-Estado: implementación validada; publicación y creación de PR por comprobar al cerrar.
+Estado: rama publicada correctamente; implementación en 9485ab4. gh pr create --draft falló con Forbidden en https://api.github.com/graphql; no se creó PR. La base existente está publicada.
 
 ## Problema y resultado
 
@@ -28,3 +28,5 @@ La comparación visual no se ejecutó por falta de referencias aprobadas; la con
 Sin build Next.js real, despliegue, benchmark de performance ni auditoría artística de cliente. React19 es la versión probada; conservar versiones del cliente y verificar compatibilidad antes de instalar. Roles/skills dependen de trust/descubrimiento de Codex. Motion Primitives pendiente de texto de licencia verificable. Paquete privado, sin licencia pública propia ni publicación npm.
 
 No fusionar ni desplegar automáticamente. Una descripción preparada o rama publicada no implica que exista PR remota.
+
+Enlace para revisar y preparar la PR manualmente: https://github.com/OussamaChElGh/WebForge-AI/compare/feat%2Fcreative-enhancement-migration...feat%2Fcreative-framework-v1?expand=1

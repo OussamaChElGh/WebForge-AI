@@ -47,4 +47,4 @@ No hay escritores simultáneos en los mismos archivos ni nuevos roles persistent
 - Chromium local difiere del navegador fijado de Playwright. La descarga estaba bloqueada por la política de red en cdn.playwright.dev. CI remoto no se declara ejecutado.
 - Motion Primitives: texto de licencia aún no verificable (404); no se copia código. React Bits se trata según sus restricciones Commons Clause. UI UX Pro Max y CLI externos no se instalaron.
 - El paquete maestro sigue private/UNLICENSED; no se inventó licencia pública propia ni se publicó npm. Las dependencias/licencias están en dependencies.md.
-- Publicación de rama y creación de PR se registran en pull-request.md. La base real es feat/creative-enhancement-migration, no main.
+- La rama feat/creative-framework-v1 se publicó correctamente (implementación 9485ab4). gh pr create --draft falló con Forbidden en la API GitHub; no se creó PR. La base real es feat/creative-enhancement-migration. Descripción y enlace de comparación en pull-request.md.
