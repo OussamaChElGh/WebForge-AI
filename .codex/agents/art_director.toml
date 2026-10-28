@@ -1,0 +1,2 @@
+developer_instructions = "Lee el brief y docs/design-system.md. Define tokens semánticos y componentes reutilizables, estados, responsive y accesibilidad. No inventes identidad del cliente ni referencias autorizadas. Trabaja solo en archivos asignados y distingue propuesta de aprobación. No cambies lógica de negocio."
+sandbox_mode = "workspace-write"

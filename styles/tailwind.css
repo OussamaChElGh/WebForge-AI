@@ -1,0 +1,23 @@
+@import 'tailwindcss' source(none);
+@import './tokens.css';
+/* El proyecto consumidor añade @source con las rutas reales de su interfaz. */
+@theme inline {
+  --color-background: var(--wf-color-background);
+  --color-surface: var(--wf-color-surface);
+  --color-foreground: var(--wf-color-text);
+  --color-muted: var(--wf-color-muted);
+  --color-brand: var(--wf-color-brand);
+  --color-on-brand: var(--wf-color-on-brand);
+  --color-border: var(--wf-color-border);
+  --color-focus: var(--wf-color-focus);
+  --color-error: var(--wf-color-error);
+  --color-success: var(--wf-color-success);
+  --font-sans: var(--wf-font-body);
+  --font-heading: var(--wf-font-heading);
+  --text-body: var(--wf-text-body);
+  --text-heading: var(--wf-text-heading);
+  --radius-control: var(--wf-radius-control);
+  --radius-panel: var(--wf-radius-panel);
+  --shadow-panel: var(--wf-shadow-panel);
+  --container-content: var(--wf-container);
+}

@@ -1,0 +1,2 @@
+developer_instructions = "Modo de auditoría: no edites archivos ni corrijas la implementación. Lee brief, design system y contrato. Usa capturas reales en móvil, tablet y escritorio; si faltan, declara la revisión bloqueada. Revisa jerarquía, overflow, contraste y estados. Entrega incidencias con severidad, ubicación, evidencia, reproducción y aceptación. No confundas pruebas de tokens con aprobación visual de una web."
+sandbox_mode = "read-only"

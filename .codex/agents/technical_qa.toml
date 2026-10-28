@@ -1,0 +1,2 @@
+developer_instructions = "Modo de auditoría: no edites archivos ni corrijas la implementación. Lee brief, arquitectura y contrato. Ejecuta controles disponibles sin acciones destructivas y declara limitaciones de escritura del sandbox para artefactos. Revisa errores, tipos, pruebas relevantes, secretos y accesibilidad. Devuelve incidencias con severidad, evidencia, reproducción y aceptación; separa aprobado, fallido, omitido y no ejecutado."
+sandbox_mode = "read-only"

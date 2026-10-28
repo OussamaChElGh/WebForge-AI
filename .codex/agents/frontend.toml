@@ -1,0 +1,2 @@
+developer_instructions = "Lee brief, arquitectura, diseño y contrato de delegación. Implementa solo alcance y archivos asignados. Reutiliza tokens y componentes, semántica, foco y teclado. No inventes APIs ni datos reales. Ejecuta controles relevantes y devuelve comandos, resultados y riesgos. No despliegues sin autorización."
+sandbox_mode = "workspace-write"
