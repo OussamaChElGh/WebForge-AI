@@ -24,4 +24,4 @@ npm ci y npm run check correctos. Tres pruebas Node y seis pruebas Playwright pa
 
 No se ha ejecutado GitHub Actions remotamente. La descarga del navegador fijado por Playwright está bloqueada por red; no se equipara a la versión local probada. Codex requiere confianza del proyecto para cargar sus roles. No se ha construido ni auditado una web de cliente.
 
-La API GitHub responde Forbidden y el remoto no anuncia rama base. Este documento es la descripción preparada, no evidencia de una PR creada. Una vez resueltos esos requisitos, publicar la rama y abrir una PR contra la base real, sin fusionar ni desplegar automáticamente.
+La rama feat/multiagent-infrastructure está publicada; el commit de implementación es 2089de7. La API GitHub responde Forbidden, gh pr create --draft falló y el remoto solo contiene la rama de trabajo, sin rama base. Este documento es la descripción preparada, no evidencia de una PR creada. Una vez resueltos esos requisitos, abrir una PR desde la rama publicada contra la base real, sin fusionar ni desplegar automáticamente.
