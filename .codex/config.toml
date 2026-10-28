@@ -1,29 +1,17 @@
-# Compatible con codex-cli 0.163.0. No fija modelos ni credenciales.
+# Codex CLI 0.163.0; modelos heredados, sin credenciales.
 [agents]
 enabled = true
-max_concurrent_threads_per_session = 3
+max_concurrent_threads_per_session = 2
 max_depth = 1
 
-[agents.orchestrator]
-description = "Planificación, coordinación y aceptación."
-config_file = "agents/orchestrator.toml"
+[agents.creative_director]
+description = "Dirección artística, especificación y coordinación creativa."
+config_file = "agents/creative_director.toml"
 
-[agents.architect]
-description = "Arquitectura y calidad estructural."
-config_file = "agents/architect.toml"
+[agents.creative_engineer]
+description = "Frontend creativo, GSAP, interacciones y rendimiento."
+config_file = "agents/creative_engineer.toml"
 
-[agents.art_director]
-description = "Dirección artística y sistema de diseño."
-config_file = "agents/art_director.toml"
-
-[agents.frontend]
-description = "Implementación de componentes y funcionalidades acordadas."
-config_file = "agents/frontend.toml"
-
-[agents.visual_qa]
-description = "Auditoría visual y responsive independiente."
-config_file = "agents/visual_qa.toml"
-
-[agents.technical_qa]
-description = "Pruebas, accesibilidad y calidad técnica independiente."
-config_file = "agents/technical_qa.toml"
+[agents.visual_critic]
+description = "Crítica independiente de calidad visual, motion y responsive."
+config_file = "agents/visual_critic.toml"

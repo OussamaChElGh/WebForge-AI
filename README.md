@@ -1,10 +1,34 @@
 # WebForge AI
 
-Infraestructura multiagente reutilizable para proyectos web profesionales. Incluye seis roles Codex, contratos de delegación, design tokens y controles de calidad; todavía no contiene ninguna aplicación de cliente.
+Creative Frontend Enhancement Framework: mejora artística e interactiva sobre webs funcionales creadas en Google AI Studio u otras herramientas. Adopción incremental en repositorios existentes, especialmente Next.js; sin regenerar páginas ni imponer un stack nuevo.
 
-## Inicio
+## Tres roles, activación selectiva
 
-Node.js 24 y npm. Desde la raíz:
+- **Creative Director** (`creative_director`): dirección artística, especificación, coordinación y aceptación; hilo principal.
+- **Creative Frontend & Motion Engineer** (`creative_engineer`): implementación creativa, motion y rendimiento.
+- **Visual Critic** (`visual_critic`): crítica independiente basada en evidencia; read-only.
+
+No son procesos siempre activos. El Director trabaja solo hasta que una tarea delimitada justifique delegar. Configuración contrastada con Codex CLI 0.163.0; revisar y confiar en el checkout desde Codex para cargar la capa local. No se fija modelo ni se modifica confianza global automáticamente.
+
+## Estructura
+
+```text
+.codex/                  Tres roles y límite de dos subagentes
+.agents/skills/          Cuatro skills creativas bajo demanda
+motion/                 Presets GSAP con scope y cleanup
+styles/                 Tokens CSS y adaptador Tailwind opt-in
+qa/                     Protocolo de crítica visual/motion/performance
+integrations/           Selección opcional, sin conectores ficticios
+templates/              Contexto, especificación y evidencia de cliente
+docs/                   Arquitectura, migración, referencias y estado
+scripts/check-spec.mjs  Gate estructural de especificación aprobada
+tests/                  Controles deterministas y navegador
+archive/                Versión generalista preservada, fuera del flujo activo
+```
+
+## Validar el framework
+
+Node.js 24. Desde esta raíz:
 
 ```sh
 npm ci
@@ -13,32 +37,22 @@ npx playwright install --with-deps chromium
 npm run test:browser
 ```
 
-Si ya existe Chromium, se puede usar explícitamente sin descargarlo:
+Si existe Chromium instalado, usarlo explícitamente:
 
 ```sh
 PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium npm run test:browser
 ```
 
-Esta alternativa depende de la versión instalada; no equivale a probar el navegador fijado por Playwright. No existen scripts dev/build mientras no exista una app.
+Registrar navegador/versión: no equivale a probar el Chromium fijado por Playwright. No hay scripts dev/build porque este repositorio no contiene una app de cliente.
 
-## Estructura
+## Aplicar a una web existente
 
-```text
-.codex/config.toml          Registro y límite de concurrencia
-.codex/agents/*.toml        Seis roles con instrucciones y sandbox
-.github/workflows/         CI: lint, tipos, formato y pruebas
-AGENTS.md                  Reglas globales
-styles/                    Tokens CSS e integración Tailwind 4
-tests/                    Pruebas Node y Playwright (sin servidor)
-docs/                      Arquitectura, diseño, contratos y evidencia
-prompts/first-run.md        Encargo inicial para Orchestrator
-templates/                 Especificaciones: corporativa, restaurante, e-commerce
-```
+1. Seguir [adopción incremental](docs/new-project.md) y persistir contexto/baseline una sola vez.
+2. Crear una copia de [la especificación](templates/enhancement-spec.json), acotar el piloto y obtener aprobación explícita de su revisión antes de editar diseño.
+3. Validar estructura con `npm run spec:check -- /ruta/spec.json`. La plantilla draft falla por diseño; el validador no autentica aprobaciones ni aplica cambios.
+4. Reutilizar componentes, estilos y animaciones existentes. Copiar solo lo necesario, con revisión de diferencias; no sobrescribir AGENTS, .codex, tokens o manifiestos del cliente.
+5. Implementar, ejecutar controles y medir presupuesto; [Visual Critic](qa/README.md) revisa capturas/clips reales antes/después.
 
-## Trabajar con los agentes
+GSAP es la única nueva dependencia de desarrollo, usada en pruebas reales de [motion](motion/README.md); el consumidor aporta su propio motor. CSS basta para efectos simples. [Las otras referencias](docs/references.md) son opciones evaluadas: UI UX Pro Max, React Bits, Motion Primitives, Three.js y React Three Fiber no se instalan automáticamente.
 
-Usar Codex CLI 0.163.0, versión contrastada con su esquema oficial. Abrir este checkout en Codex y marcarlo como proyecto de confianza únicamente si se acepta su configuración. Sin confianza, Codex omite la capa .codex del proyecto. No basta con que los TOML parseen.
-
-El hilo principal actúa como orchestrator. Los otros roles son architect, art_director, frontend, visual_qa y technical_qa. No se fija modelo; se hereda el disponible. Cada encargo sigue [el contrato de delegación](docs/delegation.md) y reserva archivos a un solo escritor. Los agentes no son procesos siempre activos ni el contrato implementa un bloqueo automático del filesystem. QA dispone de sandbox read-only.
-
-Consultar [inicio de proyectos](docs/new-project.md), [arquitectura](docs/architecture.md), [diseño](docs/design-system.md) y [evidencia actual](docs/progress.md). Next.js, React y Vercel son el stack de las aplicaciones futuras; no se instalan hasta usarse. Las plantillas describen requisitos candidatos, no generan tres apps.
+Consultar [decisiones](docs/decisions.md), [plan de migración](docs/migration.md) y [evidencia/limitaciones](docs/progress.md). No se afirma mejora artística, fluidez ni rendimiento de una web cliente hasta probar un piloto real.

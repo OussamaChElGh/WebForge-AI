@@ -10,19 +10,13 @@ import { parse } from 'smol-toml';
 
 const root = new URL('../', import.meta.url);
 const read = (file) => readFile(new URL(file, root), 'utf8');
-const roles = [
-  'orchestrator',
-  'architect',
-  'art_director',
-  'frontend',
-  'visual_qa',
-  'technical_qa',
-];
+const roles = ['creative_director', 'creative_engineer', 'visual_critic'];
 
-test('los seis roles resuelven sus instrucciones y QA tiene sandbox de solo lectura', async () => {
+test('solo tres roles activos y crítico read-only; sin modelo impuesto', async () => {
   const config = parse(await read('.codex/config.toml'));
   assert.equal(config.agents.enabled, true);
-  assert.equal(config.agents.max_concurrent_threads_per_session, 3);
+  assert.equal(config.agents.max_concurrent_threads_per_session, 2);
+  assert.equal(config.agents.max_depth, 1);
   assert.deepEqual(
     Object.keys(config.agents)
       .filter((key) => typeof config.agents[key] === 'object')
@@ -30,7 +24,7 @@ test('los seis roles resuelven sus instrucciones y QA tiene sandbox de solo lect
     roles.toSorted(),
   );
   const files = await readdir(new URL('.codex/agents/', root));
-  assert.equal(files.length, roles.length);
+  assert.deepEqual(files.sort(), roles.map((role) => `${role}.toml`).sort());
   for (const role of roles) {
     const entry = config.agents[role];
     assert.ok(entry.description.length > 15);
@@ -39,9 +33,39 @@ test('los seis roles resuelven sus instrucciones y QA tiene sandbox de solo lect
     assert.ok(layer.developer_instructions.length > 100);
     assert.equal(
       layer.sandbox_mode,
-      role.endsWith('_qa') ? 'read-only' : 'workspace-write',
+      role === 'visual_critic' ? 'read-only' : 'workspace-write',
     );
-    assert.equal(layer.model, undefined, 'el framework no impone modelo');
+    assert.equal(layer.model, undefined);
+  }
+});
+
+test('skills locales bajo demanda con metadata y sin roles históricos activos', async () => {
+  const expected = [
+    'creative-audit',
+    'art-direction',
+    'motion-enhancement',
+    'visual-review',
+  ];
+  const folders = await readdir(new URL('.agents/skills/', root));
+  assert.deepEqual(folders.sort(), expected.toSorted());
+  for (const name of expected) {
+    const content = await read(`.agents/skills/${name}/SKILL.md`);
+    assert.ok(content.startsWith(`---\nname: ${name}\ndescription: `));
+    assert.ok(
+      content.includes('Cargar únicamente cuando la tarea lo requiera'),
+    );
+  }
+  for (const name of [
+    'orchestrator',
+    'architect',
+    'art_director',
+    'frontend',
+    'visual_qa',
+    'technical_qa',
+  ]) {
+    assert.ok(
+      (await read(`archive/generalist-v0.1/${name}.toml.txt`)).length > 0,
+    );
   }
 });
 

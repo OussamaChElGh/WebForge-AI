@@ -1,17 +1,21 @@
-# Sistema de diseño reutilizable
+# Design system para enhancement
 
-## Implementado
+## Conservar identidad, mejorar intención
 
-styles/tokens.css define valores base neutrales del framework, no la identidad aprobada de un cliente. Roles: background, surface, text, muted, brand, on-brand, border, focus, error y success. Incluye fuentes de sistema, escala de texto, espaciados, radios, sombra, contenedor y movimiento. prefers-reduced-motion elimina la duración de movimiento del token; los componentes deben consumirlo para respetar esa preferencia.
+El punto de partida son tokens, componentes, fuentes y referencias del cliente. Creative Director define composición, jerarquía editorial, ritmo y lenguaje de movimiento para las áreas aprobadas. No imponer la paleta neutral del framework ni una estética idéntica a todos los clientes. No sustituir tipografía, espaciado global o globals.css sin especificación aprobada.
 
-styles/tailwind.css importa Tailwind 4 y los tokens; @theme inline expone utilidades semánticas como bg-brand, text-on-brand y rounded-control. Desactiva búsqueda automática con source(none). El proyecto consumidor añade @source con las rutas reales de componentes desde su CSS de entrada; no escanear otros clientes ni depender de clases construidas dinámicamente. Los espaciados wf se pueden consumir como CSS var o utilidades arbitrarias, por ejemplo p-[var(--wf-space-4)]. Los breakpoints iniciales son los predeterminados de Tailwind 4; cambiarlos exige una necesidad documentada.
+## Base reutilizable
 
-## Personalización
+styles/tokens.css conserva los roles semánticos background/surface/text/muted/brand/on-brand/border/focus/error/success y escalas de tipografía, espacio, contenedores, radios y movimiento. Son valores de laboratorio, no una identidad aprobada. Sus contrastes base se comprueban determinísticamente.
 
-Copiar styles/ al proyecto cliente junto con el contrato documentado. Cargar una hoja de identidad después de tokens.css para sobrescribir variables wf sin cambiar los nombres semánticos. Si se usa el adaptador Tailwind, conservar su integración y añadir la identidad después. Definir primero marca, referencias con derechos y contenido real; revisar contraste de las nuevas combinaciones. No aprobar una identidad por reutilizar los valores base.
+styles/tailwind.css es adaptador opcional para Tailwind 4 con source(none) y @theme inline. El consumidor añade @source con rutas reales. No introducirlo en Tailwind 3 ni reemplazar su configuración. Si hay un sistema existente, mapear los roles necesarios y mantener la fuente de verdad del cliente.
 
-Cada componente futuro documentará variantes, estados (hover, foco, activo, disabled, error), comportamiento responsive y semántica. Mantener foco visible, textos alternativos pertinentes y errores asociados; usar tokens y movimiento reducido. Evitar abstracciones hasta que haya patrones repetidos reales.
+## Dirección y motion
 
-## Evidencia y límites
+Documentar para el piloto: orden de lectura, escala y medida tipográfica, composición de imágenes, densidad, contraste, punto focal y referencias con derechos. Motion debe reforzar jerarquía o narrativa, no esconder contenido ni competir con el CTA. Definir disparador, duración/ease, capas afectadas y alternativa estática/reduced motion.
 
-Las pruebas Node calculan ratios WCAG de pares base y compilan utilidades reales con Tailwind. Las pruebas Playwright comprueban CSS aplicado, foco por teclado, ausencia de overflow de una fixture y preferencia de movimiento en 320, 768 y 1280 px. Esto valida infraestructura de tokens, no una interfaz de cliente ni conformidad completa WCAG. La auditoría visual necesita capturas reales de la app y revisión de sus estados; no hay app ni capturas en esta iteración.
+Biblioteca motion/ separada de identidad: presets opt-in con motor GSAP aportado por consumidor y wrappers dedicados. El valor --wf-motion-duration de CSS no controla automáticamente un tween GSAP; estos presets usan matchMedia para preferencias. Evitar animar la misma propiedad desde CSS y varios motores.
+
+## Aceptación
+
+Verificar legibilidad, teclado/foco, contraste AA pertinente, objetivos de controles, zoom y responsive de la interfaz real. Verificar contenido sin JS, reduced motion y cleanup en navegación. Las pruebas de tokens no prueban accesibilidad completa ni calidad artística de un cliente. Visual Critic necesita capturas y clips comparables; el Director decide con intención y evidencias, no con la cantidad de efectos.

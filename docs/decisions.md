@@ -1,4 +1,20 @@
-# Registro de decisiones
+# Registro de decisiones vigente
+
+## Migración creativa — 2026-10-28
+
+| Decisión                                                  | Motivo y consecuencias                                                                                                      | Estado                                     |
+| --------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------ |
+| Sustituir seis roles por tres creativos                   | Director coordina; Engineer implementa y verifica; Critic revisa. No ampliar la arquitectura anterior                       | Autorizado por el usuario e implementado   |
+| Enhancement sobre frontend existente                      | No repetir generación de Google AI Studio ni reconstruir Next.js; preservar stack/función/diseño fuera de la especificación | Regla vigente                              |
+| Especificación con aprobación de revisión antes de diseño | Gate estructural y contraste de evidencia humana; draft no permite implementar                                              | Implementado; no hay aprobación cliente    |
+| GSAP como única nueva devDependency                       | Presets propios probados, motor inyectado; CSS primero y otras referencias opcionales                                       | Implementado, sin catálogo externo copiado |
+| Skills y contexto bajo demanda                            | Auditar una vez por revisión, pasar diffs y medir eficiencia; no activar todos los roles                                    | Implementado                               |
+| Archivo histórico fuera de registro/lectura habitual      | Preservar trabajo anterior sin mantener roles obsoletos activos                                                             | Implementado en archive/generalist-v0.1    |
+| Conservar calidad determinista y tokens opt-in            | Reusar lo comprobable sin imponer un tema o una migración Tailwind al cliente                                               | Implementado                               |
+
+## Historial anterior (sustituido cuando contradice lo vigente)
+
+### Decisiones de v0.1
 
 | Fecha | Decisión    | Motivo | Responsable | Estado    |
 | ----- | ----------- | ------ | ----------- | --------- |

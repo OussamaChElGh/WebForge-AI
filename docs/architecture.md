@@ -1,29 +1,43 @@
-# Arquitectura del framework
+# Arquitectura creativa v0.2
 
-## Implementado
+## Responsabilidad
 
-Un repositorio de infraestructura, sin servidor, app Next.js ni motor propio de agentes. Codex coordina los roles nativos registrados en .codex/config.toml; cada config_file relativo a .codex apunta a instrucciones y sandbox del rol. Orchestrator incorpora discovery; la configuración adjunta anterior product_strategist se sustituye por los seis roles solicitados. Los modelos se heredan, sin proveedores ni credenciales embebidos.
+WebForge mejora la capa visual/interactiva de un frontend ya funcional. Google AI Studio u otra herramienta entrega código; se recibe un checkout, no se asume una API de generación ni un MCP. No hay backend, producto, deployment ni motor de agentes propios. El framework no construye otra aplicación Next.js para sustituir la existente.
 
-Límite de tres subagentes concurrentes y profundidad V1 de uno. Los roles de implementación pueden escribir dentro del sandbox de workspace y de su contrato; QA es read-only. El contrato de archivos es una regla de coordinación, no un lock del sistema operativo. La confianza del checkout se configura por el usuario en Codex, nunca se concede desde el repositorio.
+## Módulos
 
-## Capas
+| Módulo          | Función                                                                 | Carga                                                    |
+| --------------- | ----------------------------------------------------------------------- | -------------------------------------------------------- |
+| .codex/         | Tres roles nativos: creative_director, creative_engineer, visual_critic | Director principal; especialistas solo por tarea         |
+| .agents/skills/ | Auditoría, dirección, motion y crítica                                  | Solo skill pertinente; instrucciones, no agentes nuevos  |
+| motion/         | Reveal/parallax GSAP, inyección de motor, scope y reversión             | Opt-in y frontera cliente; sin acceso DOM al importar    |
+| styles/         | Tokens semánticos y adaptador Tailwind 4                                | Opcional; preservar estilos/versión Tailwind del cliente |
+| qa/             | Evidencia visual, responsive, accesibilidad y presupuesto               | Comandos deterministas antes de crítica humana           |
+| integrations/   | Guía de adopción de referencias y límites externos                      | Sin SDKs/MCPs automáticos                                |
+| templates/      | Contexto persistido, especificación aprobable y comparación             | Archivos de proyecto concretos, sin repetir análisis     |
+| docs/           | Decisiones, referencias, estado y migración                             | Resumen primero; detalles solo cuando se necesitan       |
+| archive/        | Documentación y roles generalistas anteriores                           | No cargar en contexto habitual ni registrar como agentes |
 
-- .codex/: registro de seis roles y capas de configuración compatibles con CLI 0.163.0.
-- docs/ y templates/: fuente compartida de requisitos, decisiones y contratos.
-- styles/: tokens CSS y adaptador Tailwind 4; sin React ni layout de cliente.
-- tests/: pruebas Node para roles, contraste y compilación Tailwind; Playwright para consumo CSS, teclado y movimiento reducido en tres viewports con fixture en memoria.
-- .github/workflows/: controles con Node 24, npm ci y Chromium Playwright. Sin despliegues, secretos ni permisos de escritura.
+## Roles y fronteras
 
-## Dependencias justificadas
+Creative Director absorbe coordinación y dirección de arte; identifica intención, alcance y aceptación. Creative Engineer implementa frontend/motion y ejecuta calidad técnica. Visual Critic revisa sin editar y declara lo no evaluable sin capturas reales. No se crea un cuarto agente para un comando de test. Máximo dos subagentes concurrentes, profundidad V1 uno y un escritor por archivo. El contrato es organizativo, no un lock del filesystem.
 
-TypeScript comprueba configuración y pruebas Playwright; ESLint + typescript-eslint analizan JS/TS; Prettier comprueba formato; smol-toml verifica roles en tests Node; Tailwind y su CLI prueban compilación de los tokens; @playwright/test ejecuta pruebas en navegador. No se añaden React, Next.js, SDK Vercel, CMS ni backend porque no hay código que los use.
+Registro [agents.<role>] con description/config_file y capas de sandbox, sin modelo impuesto. Codex instalado 0.163.0; la validación de esquema y la carga nativa son comprobaciones diferentes. Codex puede ignorar el registro hasta confiar en el checkout; no se cambia trust global desde el repo. Las skills usan el formato local .agents/skills/<name>/SKILL.md; su disponibilidad en otro cliente requiere descubrimiento nativo de esa instalación.
 
-TypeScript 6.0.3 está fijado: la versión actual 7 supera el rango de compatibilidad declarado por typescript-eslint. Versiones y dependencias transitivas quedan en package-lock.json. Node 24 está declarado en .nvmrc y engines.
+## Flujo incremental
 
-## Validación de Codex
+Contexto y baseline → especificación draft → aprobación de revisión → gate estructural → piloto delimitado → controles/evidencia → crítica → aceptación o corrección del mismo propietario. Cambios de revisión invalidan aprobación anterior. Nunca se infiere consentimiento del silencio ni de que un JSON tenga status approved; hay que contrastar approvalEvidence.
 
-Las siete configuraciones pasan el esquema oficial de la etiqueta rust-v0.163.0 (https://raw.githubusercontent.com/openai/codex/rust-v0.163.0/codex-rs/core/config.schema.json). El app-server instalado responde a config/read con cwd explícito y confirma que esta máquina omite la capa del proyecto por falta de confianza. No se alteró la configuración global para forzarla. La compatibilidad del formato está verificada; el uso nativo de los roles en una sesión que confíe en este checkout sigue pendiente. Los subagentes de esta sesión fueron delegados mediante las herramientas disponibles, sin afirmar que provinieran del registro local.
+En Next.js, incorporar solo una isla cliente para efectos; no convertir toda una ruta a use client, cambiar router o reemplazar global.css. Mantener el resto del stack, contenido, SEO, datos e integraciones intactos salvo alcance explícito. El ejemplo de motion es orientación para un efecto, no una integración Next.js ejecutada.
 
-## Extensión futura
+## Dependencias y tecnologías
 
-Cada cliente empieza con brief y especificación vertical. Tras definir el alcance se crea una app Next.js App Router, React, TS y Tailwind con contenido tipado y Server Components por defecto. Se fijan versiones compatibles al crearla; se añaden scripts dev/build y pruebas de flujos reales. CMS, autenticación, reservas, pedidos y pagos requieren requisitos y proveedores concretos. Vercel se configura cuando exista una app, con autorización para desplegar. No existe todavía evidencia de build de Next.js ni de despliegue.
+Se conservan TypeScript 6, ESLint, Prettier, Playwright, smol-toml y Tailwind CLI porque se usan en controles. GSAP 3.15.0 se añade como devDependency para probar presets reales; motion/ no importa el motor en runtime y el proyecto cliente decide su instalación. No se instala React, Next, Motion, Three/Fiber ni catálogos. Consultar [evaluación](references.md) antes de ampliar.
+
+Reutilizar CSS/motion existentes primero. GSAP para secuencias/scroll; 3D solo con función artística clara, fallback, carga diferida, lifecycle y presupuesto. No añadir scroll smoothing global por defecto.
+
+## Eficiencia y límites
+
+Guardar revisión auditada, rutas, decisiones y resultados. Cada asignación transmite objetivo, archivos/diff, skill y aceptación, no todo el repo. El crítico recibe evidencias reales, no otra auditoría de arquitectura. Actualizar referencias solo al cambiar versión/necesidad. Medir rondas, reutilización y tiempo; tokens solo si hay medición disponible.
+
+No hay app cliente ni benchmark de calidad artística. Las fixtures verifican scope, cleanup, CSS y responsive técnico del laboratorio; no prueban Core Web Vitals ni conformidad WCAG del cliente. No se añaden servicios para métricas: usar herramientas existentes y registrar sus condiciones.

@@ -1,28 +1,7 @@
-# Project brief
+# Contexto del framework
 
-## Cliente y contexto
+Misión vigente: Creative Frontend Enhancement Framework, no generador de webs completas. Tres roles: Creative Director, Creative Frontend & Motion Engineer y Visual Critic. La migración del framework está autorizada; ningún rediseño cliente está aprobado.
 
-- Cliente: por definir
-- Tipo de negocio: por definir
-- Audiencia e idiomas: por definir
-- Objetivo de negocio y CTA principal: por definir
+Estado: no hay aplicación cliente en este repositorio. El restaurante mencionado antes queda en archivo histórico. Crear un contexto por cliente usando templates/client-context.md y una especificación usando templates/enhancement-spec.json; no convertir este documento en un brief compartido de varios clientes.
 
-## Alcance
-
-- Páginas y navegación: por definir
-- Funcionalidades: por definir
-- Contenidos y assets aportados: por definir
-- Integraciones: por definir
-
-## Restricciones
-
-- Stack base: Next.js, React, TypeScript, Tailwind CSS, Vercel
-- Privacidad, consentimiento y requisitos legales: evaluar según alcance y mercado
-
-## Criterios de aceptación
-
-- [ ] Alcance aprobado
-- [ ] Diseño revisado
-- [ ] Responsive verificado
-- [ ] QA técnico verificado
-- [ ] Preview aprobada por el cliente
+Elementos protegidos por defecto en cada cliente: comportamiento funcional, contenido, rutas, SEO, datos, integraciones y diseño original fuera del piloto aprobado. No se requiere reconstruir ni migrar stack.

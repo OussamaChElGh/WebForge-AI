@@ -1,67 +1,43 @@
-# Contratos de delegación
+# Delegación creativa
 
-El Orchestrator mantiene el alcance, asigna propietarios y acepta entregas. Delega cuando una tarea tiene límites claros o requiere revisión independiente; no es necesario activar todos los roles ni trabajar siempre en paralelo. Una asignación no concede permisos adicionales sobre archivos, servicios o secretos.
+Creative Director mantiene alcance, coordinación y aceptación. No activar todos los agentes por defecto. Usar solo creative_engineer para un cambio aprobado o visual_critic para una revisión independiente de evidencia terminada.
 
-## Contrato obligatorio
-
-Copiar y completar este bloque en cada asignación. Una entrada pendiente que impida comprobar la aceptación es un bloqueo, no permiso para inventarla.
+## Contrato breve
 
 ```yaml
 id: WF-001
-role: architect
-objective: Resultado concreto y limitado
+role: creative_engineer
+objective: Resultado artístico concreto
+base_revision: SHA auditada del cliente
 inputs:
-  - docs/project-brief.md aprobado
-  - docs/architecture.md
+  - contexto persistido y diff relevante
+  - especificación aprobada, revisión y referencia de aprobación
+  - skill de motion solo si hace falta
 allowed_files:
-  - docs/architecture.md
-forbidden_actions:
-  - editar otros archivos
-  - instalar dependencias sin justificación y autorización de la tarea
-  - desplegar o modificar producción
+  - src/components/ExistingHero.tsx
+protected_files:
+  - src/app/layout.tsx
 deliverables:
-  - decisión documentada y alternativas relevantes
+  - diff acotado y evidencia antes/después
 acceptance:
-  - cada decisión corresponde a un requisito del brief
-  - riesgos y cuestiones abiertas identificados
+  - criterio visual/motion comprobable y presupuesto acordado
 validation:
-  - revisión documental con referencias a requisitos
+  - comandos reales del proyecto y casos afectados
 handoff:
-  - archivos cambiados
-  - comprobaciones ejecutadas y resultado
-  - comprobaciones pendientes y motivo
-  - bloqueos y decisiones necesarias
+  - resultado, evidencia, riesgos y siguiente acción
 status: assigned
 ```
 
-Los identificadores y campos son un contrato de trabajo escrito, no un servicio de planificación ni un mecanismo de bloqueo automático. Los nombres de rol se deben corresponder con los definidos en `.codex/config.toml`.
+El ejemplo no autoriza editar ese archivo en ningún cliente. Pasar rutas concretas, no todo el repositorio. El Director registra asignación y propietario en el contexto/progreso. Estados: assigned → in_progress → review → accepted; blocked y changes_requested cuando corresponda. Un cambio de alcance/revisión exige nueva aprobación.
 
-## Propiedad de archivos y concurrencia
+## Propiedad y relevos
 
-1. Antes de lanzar un agente, el Orchestrator registra su ID, rol y lista concreta de archivos permitidos en la asignación y en `docs/progress.md`.
-2. Cada archivo tiene un único escritor activo. Una carpeta completa asignada a un agente reserva todos sus archivos para ese agente durante la tarea. No se permiten asignaciones de escritura solapadas.
-3. Las tareas que cambian un archivo compartido se ejecutan en secuencia. El Orchestrator reúne las propuestas y realiza la integración después de que termine el escritor anterior.
-4. Si aparecen archivos nuevos necesarios fuera del contrato, el agente comunica el cambio y espera una reasignación para modificarlos. Puede continuar el trabajo independiente permitido.
-5. Estados: `assigned` → `in_progress` → `review` → `accepted`; también `blocked` o `changes_requested`. La propiedad se libera al cerrar o reasignar explícitamente la tarea, no al interpretar un silencio como aprobación.
-6. Un agente que detecta cambios inesperados detiene la edición del archivo afectado y avisa; no restaura ni sobrescribe el trabajo de otro.
+Un escritor por archivo. Reservar una carpeta incluye sus archivos internos: no permitir reservas solapadas. Si hay salida compartida, secuenciar tareas y liberar propiedad antes de integrar. Un agente no edita fuera del contrato ni sobrescribe cambios inesperados; informa y continúa solo trabajo independiente. La configuración permite como máximo dos subagentes, sin obligar a usarlos ni ampliar permisos.
 
-## Relevo entre roles
+Creative Director aprueba especificación e integra; Creative Engineer implementa, ejecuta comandos y captura artefactos; Visual Critic es read-only, no corrige ni actualiza snapshots. Si necesita escritura para un comando, revisa los artefactos generados por el ingeniero. El Director toma la decisión final con evidencia.
 
-| Rol                | Entradas mínimas                                        | Entrega esperada                                              |
-| ------------------ | ------------------------------------------------------- | ------------------------------------------------------------- |
-| Orchestrator       | Encargo y restricciones                                 | Alcance, asignaciones, integración y aceptación con evidencia |
-| Software Architect | Brief y decisiones vigentes                             | Arquitectura, contratos y riesgos justificables               |
-| Art Director       | Brief, marca y referencias autorizadas                  | Tokens, composición, estados y criterios visuales             |
-| Frontend Engineer  | Alcance, arquitectura y diseño acordados                | Implementación y comprobaciones pertinentes                   |
-| Visual QA          | Capturas reales, rutas, viewports y diseño acordado     | Incidencias reproducibles y criterios de corrección           |
-| Technical QA       | Requisitos, revisión disponible y comandos del proyecto | Resultados técnicos, accesibilidad y fallos reproducibles     |
+## Entrega y consumo de contexto
 
-Las claves registradas en `.codex/config.toml` son `orchestrator`, `architect`, `art_director`, `frontend`, `visual_qa` y `technical_qa`. `orchestrator` puede actuar como hilo principal. Los nombres de presentación de la tabla no sustituyen estas claves. La configuración limita a tres hilos de subagentes concurrentes por sesión; no es una obligación de activarlos. Los roles de QA usan configuración de solo lectura y revisan sin modificar la solución.
+Entregar resultado, archivos cambiados, comandos/resultados, hasta cinco riesgos/incidencias prioritarios y siguiente acción. Evitar reproducir el contexto completo o rehacer discovery de producto. Las skills son manuales de trabajo bajo demanda, no subtareas obligatorias.
 
-QA revisa una entrega terminada sin editar la solución durante esa revisión. Cada incidencia incluye severidad, ruta o archivo, pasos, evidencia, resultado observado, esperado y criterio de cierre. Las correcciones vuelven al propietario de implementación; QA repite solo las comprobaciones afectadas y las de regresión justificadas. El Orchestrator acepta cuando la evidencia satisface el contrato y registra cualquier limitación.
-
-## Evidencia y bloqueos
-
-Registrar comando o procedimiento, directorio, resultado y alcance. Distinguir `passed`, `failed`, `skipped` y `not_run`; un puerto abierto, una prueba sin casos o un comando que nunca se ejecutó no validan el producto. La auditoría visual requiere capturas reales y la accesibilidad requiere comprobaciones pertinentes, incluidas las manuales cuando corresponda.
-
-Si falta información, acceso o una capacidad del entorno, indicar la operación exacta bloqueada y continuar tareas independientes. Nunca incluir valores secretos en asignaciones, decisiones, capturas o logs. Aprobar una propuesta documental no prueba una integración ni autoriza un despliegue.
+Separar passed/failed/skipped/not_run y propuestas de hechos. Capturas reales comparables acreditan apariencia; grabación/traza permite revisar motion; mediciones del build y dispositivo objetivo acreditan presupuesto. Tests de fixtures no equivalen a una mejora del cliente. Sin evidencia, declarar no evaluable y pedir solo lo que desbloquee la decisión.
